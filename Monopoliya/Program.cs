@@ -30,7 +30,7 @@ namespace Monopoliya
 
                 for (var j = 0; j < boxes.Count; j++)
                 {
-                    if (pallet.AddBox(boxes.ElementAt(j)))
+                    if (pallet.AddItem(boxes.ElementAt(j)))
                         upDatedBoxes.RemoveAt(j);
                 }
 

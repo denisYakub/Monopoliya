@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Monopoliya.Objects
 {
-    public class Pallet<T> : WarehouseObj where T : Box
+    public class Pallet<T> : WarehouseObj where T : WarehouseObj
     {
-        private ICollection<T> _boxes = new List<T>(100);
+        private ICollection<T> _items = new List<T>(100);
 
         public override DateOnly ExpirationDate
         {
             get
             {
-                if (_boxes.Any())
-                    return _boxes.OrderBy(box => box.ExpirationDate).First().ExpirationDate;
+                if (_items.Any())
+                    return _items.OrderBy(item => item.ExpirationDate).First().ExpirationDate;
                 else
                     return DateOnly.FromDateTime(DateTime.Now);//!
             }
@@ -24,8 +24,8 @@ namespace Monopoliya.Objects
         {
             get
             {
-                if (_boxes != null && _boxes.Any())
-                    return _boxes.Sum(box => box.Volume) + Height * Width * Depth;
+                if (_items != null && _items.Any())
+                    return _items.Sum(item => item.Volume) + Height * Width * Depth;
                 else
                     return Height * Width * Depth;
             }
@@ -40,24 +40,24 @@ namespace Monopoliya.Objects
 
         }
 
-        public bool AddBox(T box)
+        public bool AddItem(T item)
         {
-            if (!Fits(box))
+            if (!Fits(item))
                 return false;
 
-            _boxes.Add(box);
+            _items.Add(item);
 
             return true;
         }
 
         public bool AnyBox()
-            => _boxes.Any();
+            => _items.Any();
 
-        private bool Fits(T box)
-            => box.Width <= Width && box.Depth <= Depth;
+        private bool Fits(T item)
+            => item.Width <= Width && item.Depth <= Depth;
 
         public override string ToString()
             => $"Pallet:\n\tHeight={Height}\n\tWidth={Width}\n\tDepth={Depth}\n\t" +
-            $"Volume={Volume}\n\tExpirationDate={ExpirationDate}\n\tBoxesCount={_boxes.Count}";
+            $"Volume={Volume}\n\tExpirationDate={ExpirationDate}\n\tBoxesCount={_items.Count}";
     }
 }
