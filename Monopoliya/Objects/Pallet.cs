@@ -31,13 +31,26 @@ namespace Monopoliya.Objects
             }
         }
 
-        public Pallet(int width, int height, int depth, float weight) : base(width, height, depth, weight)
+        public override float Weight
         {
-
+            get
+            {
+                if (_items != null && _items.Any())
+                    return _items.Sum(item => item.Weight) + _weight;
+                else
+                    return _weight;
+            }
         }
-        public Pallet(int id, int width, int height, int depth, float weight) : base(id, width, height, depth, weight)
-        {
 
+        private float _weight;
+
+        public Pallet(int width, int height, int depth, float weight) : base(width, height, depth)
+        {
+            _weight = weight;
+        }
+        public Pallet(int id, int width, int height, int depth, float weight) : base(id, width, height, depth)
+        {
+            _weight = weight;
         }
 
         public bool AddItem(T item)
@@ -58,6 +71,6 @@ namespace Monopoliya.Objects
 
         public override string ToString()
             => $"Pallet:\n\tHeight={Height}\n\tWidth={Width}\n\tDepth={Depth}\n\t" +
-            $"Volume={Volume}\n\tExpirationDate={ExpirationDate}\n\tBoxesCount={_items.Count}";
+            $"Weight={Weight}\n\tVolume={Volume}\n\tExpirationDate={ExpirationDate}\n\tBoxesCount={_items.Count}";
     }
 }

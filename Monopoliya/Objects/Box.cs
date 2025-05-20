@@ -28,24 +28,38 @@ namespace Monopoliya.Objects
             }
         }
 
+        public override float Weight
+        {
+            get
+            {
+                return _weight;
+            }
+        }
+
+        private float _weight;
+
         private DateOnly? _expirationDate;
         private DateOnly? _productionDate;
 
         public Box(int width, int height, int depth, float weight, DateOnly? expirationDate, DateOnly? productionDate) 
-            : base(width, height, depth, weight)
+            : base(width, height, depth)
         {
             _expirationDate = expirationDate;//!
             _productionDate = productionDate;//!
+
+            _weight = weight;
         }
         public Box(int id, int width, int height, int depth, float weight, DateOnly? expirationDate, DateOnly? productionDate) 
-            : base(id, width, height, depth, weight)
+            : base(id, width, height, depth)
         {
             _expirationDate = expirationDate;//!
             _productionDate = productionDate;//!
+
+            _weight = weight;
         }
 
         public override string ToString()
             => $"Box:\n\tHeight={Height}\n\tWidth={Width}\n\tDepth={Depth}\n\t" +
-            $"Volume={Volume}\n\tExpirationDate={ExpirationDate}";
+            $"Weight={Weight}\n\tVolume={Volume}\n\tExpirationDate={ExpirationDate}";
     }
 }

@@ -12,14 +12,15 @@ namespace Monopoliya.Objects
         public int Width;
         public int Height;
         public int Depth;
-        public float Weight;
+
+        public abstract float Weight {  get; }
 
         public abstract float Volume { get; }
         public abstract DateOnly ExpirationDate { get; }
 
-        public WarehouseObj(int id, int width, int height, int depth, float weight) 
-            => (Id, Width, Height, Depth, Weight) = (id, width, height, depth, weight);
-        public WarehouseObj(int width, int height, int depth, float weight)
-            => (Width, Height, Depth, Weight) = (width, height, depth, weight);
+        public WarehouseObj(int id, int width, int height, int depth) 
+            => (Id, Width, Height, Depth) = (id, width, height, depth);
+        public WarehouseObj(int width, int height, int depth)
+            => (Width, Height, Depth) = (width, height, depth);
     }
 }
